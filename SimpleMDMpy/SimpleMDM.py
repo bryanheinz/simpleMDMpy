@@ -13,7 +13,7 @@ class ApiError(Exception):
     """Catch for API Error"""
     pass
 
-class Connection(object): #pylint: disable=old-style-class,too-few-public-methods
+class Connection(object): #pylint: disable=too-few-public-methods
     """create connection with api key"""
     proxyDict = dict()
 
@@ -28,7 +28,7 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
         """GET call to SimpleMDM API"""
         start_id = 0
         has_more = True
-        resp_data = []
+        resp_data = {}
         base_url = url
         while has_more:
             url = base_url + "?limit=100&starting_after=" + str(start_id)
@@ -36,11 +36,15 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
             if not 200 <= resp.status_code <= 207:
                 raise ApiError(f"API returned status code {resp.status_code}")
             resp_json = resp.json()
-            data = resp_json['data']
-            resp_data.extend(data)
+            resp_data.update(resp_json)
             has_more = resp_json.get('has_more', None)
             if has_more:
-                start_id = data[-1].get('id')
+                data = resp_json.get('data')
+                data_type = type(data)
+                if data_type == dict:
+                    start_id = data.get('id')
+                elif data_type == list:
+                    start_id = data[-1].get('id')
         return resp_data
 
     def _patch_data(self, url, data, files=None):
