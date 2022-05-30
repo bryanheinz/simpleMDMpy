@@ -25,6 +25,9 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
 
     def __init__(self, api_key):
         self.api_key = api_key
+        # setup a session that can retry, helps with rate limiting end-points
+        # https://findwork.dev/blog/advanced-usage-python-requests-timeouts-retries-hooks/#retry-on-failure
+        # https://macadmins.slack.com/archives/C4HJ6U742/p1652996411750219
         retry_strategy = Retry(
             total = 5,
             backoff_factor = 1,
@@ -44,19 +47,22 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
         """base api url"""
         return 'https://a.simplemdm.com/api/v1' + path
 
+    # TODO: make _is_devices_req generic for any future rate limited endpoints
     def _is_devices_req(self, url):
         return url.startswith(self._url("/devices"))
 
-    def _get_data(self, url, params=None):
+    def _get_data(self, url, params={}):
         """GET call to SimpleMDM API"""
-        start_id = 0
         has_more = True
         list_data = []
-        if params is None:
-            params = {}
-        params["limit"] = 100
+        # by using the local req_params variable, we can set our own defaults if
+        # the parameters aren't included with the input params. This is needed
+        # so that certain other functions, like Logs.get_logs(), can send custom
+        # starting_after and limit parameters.
+        req_params = {}
+        req_params['limit'] = params.get('limit', 100)
+        req_params['starting_after'] = params.get('starting_after', 0)
         while has_more:
-            params["starting_after"] = start_id
             # Calls to /devices should be rate limited
             if self._is_devices_req(url):
                 if time.time() - self.last_device_req_timestamp < self.device_req_rate_limit:
@@ -80,7 +86,7 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
             list_data.extend(data)
             has_more = resp_json.get('has_more', False)
             if has_more:
-                start_id = data[-1].get('id')
+                params["starting_after"] = data[-1].get('id')
         return list_data
 
     def _get_xml(self, url, params=None):
