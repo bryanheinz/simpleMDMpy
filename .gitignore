@@ -1,5 +1,6 @@
 *.pyc
 *.egg*
 .DS_Store
+settings.py
 
 .vscode
