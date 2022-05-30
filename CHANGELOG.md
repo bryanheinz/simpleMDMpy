@@ -2,17 +2,23 @@
 
 ## [Unreleased]
 
+### Added
+- setup.cfg - Python package setup file ([#29](https://github.com/macadmins/simpleMDMpy/issues/29)) - TY [@bryanheinz](https://github.com/bryanheinz)
+- pyproject.toml - Python package meta setup file ([#29](https://github.com/macadmins/simpleMDMpy/issues/29)) - TY [@bryanheinz](https://github.com/bryanheinz)
+
 ### Changes
 
-- Added ability to update the actual device name via SimpleMDM (#24, #38) ([@bryanheinz](https://github.com/bryanheinz))
-- Replaced get_logs() `id_override` input parameter with `starting_after` and `limit` (#25) ([@bryanheinz](https://github.com/bryanheinz))
-- Fixes calls that return a single item (#26) ([@MagerValp](https://github.com/MagerValp))
-- Add method to download profiles (#40) ([@joncrain](https://github.com/joncrain))
-- Adds option for get_devices to include_awaiting_enrollment (#43) ([@joncrain](https://github.com/joncrain))
-- Fixes `Devices.delete_device()` ([@MagerValp](https://github.com/MagerValp))
+- Added ability to update the actual device name via SimpleMDM ([#24](https://github.com/macadmins/simpleMDMpy/issues/24), [#38](https://github.com/macadmins/simpleMDMpy/issues/38)) - TY [@bryanheinz](https://github.com/bryanheinz)
+- Replaced get_logs() `id_override` input parameter with `starting_after` and `limit` ([#25](https://github.com/macadmins/simpleMDMpy/issues/25)) - TY [@bryanheinz](https://github.com/bryanheinz)
+- Fixes calls that return a single item ([#26](https://github.com/macadmins/simpleMDMpy/issues/26)) - TY [@MagerValp](https://github.com/MagerValp)
+- Add method to download profiles ([#40](https://github.com/macadmins/simpleMDMpy/issues/40)) - TY [@joncrain](https://github.com/joncrain)
+- Adds option for get_devices to include_awaiting_enrollment ([#43](https://github.com/macadmins/simpleMDMpy/issues/43)) - TY [@joncrain](https://github.com/joncrain)
+- Fixes `Devices.delete_device()` - TY [@MagerValp](https://github.com/MagerValp)
 - Add Devices methods for enabling/disabling remote desktop, and profile and user listing ([@MagerValp](https://github.com/MagerValp))
-- Add /devices request rate limiting to `_get_data` ([@MagerValp](https://github.com/MagerValp))
-- Add retry on 5xx errors to GET requests to `_get_data` ([@MagerValp](https://github.com/MagerValp))
+- Add /devices request rate limiting to `_get_data` - TY [@MagerValp](https://github.com/MagerValp)
+- Add retry on 5xx errors to GET requests to `_get_data` - TY [@MagerValp](https://github.com/MagerValp)
+- Fixes `_get_data` so that it properly preserves all input parameters ([#45](https://github.com/macadmins/simpleMDMpy/issues/45)) - TY [@bryanheinz](https://github.com/bryanheinz)
+- Adds help docs to Devices.get_device() - TY [@bryanheinz](https://github.com/bryanheinz)
 
 ### Issues
 
@@ -22,6 +28,8 @@
 - Closes issue #26
 - Closes issue #40
 - Closes issue #43
+- Closes issue #29
+- Closes issue #45
 
 ## [v3.0.6]
 
