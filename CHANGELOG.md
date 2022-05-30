@@ -4,11 +4,11 @@
 
 ### Changes
 
-- Added ability to update the actual device name via SimpleMDM (#24, #38)
-- Replaced get_logs() `id_override` input parameter with `starting_after` and `limit` (#25)
-- Fixes calls that return a single item (#26)
-- Add method to download profiles (#40)
-- Adds option for get_devices for include_awaiting_enrollment (#43)
+- Added ability to update the actual device name via SimpleMDM (#24, #38) (@bryanheinz)
+- Replaced get_logs() `id_override` input parameter with `starting_after` and `limit` (#25) (@bryanheinz)
+- Fixes calls that return a single item (#26) (@MagerValp)
+- Add method to download profiles (#40) (@joncrain)
+- Adds option for get_devices to include_awaiting_enrollment (#43) (@joncrain)
 
 ### Issues
 
@@ -17,6 +17,7 @@
 - Closes issue #25
 - Closes issue #26
 - Closes issue #40
+- Closes issue #43
 
 ## [v3.0.6]
 
