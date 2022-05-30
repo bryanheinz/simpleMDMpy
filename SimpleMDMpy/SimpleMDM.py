@@ -34,6 +34,11 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
         self.session = requests.Session()
         self.session.mount("https://", adapter)
         self.session.mount("http://", adapter)
+    
+    def __del__(self):
+        # this runs when the Connection object is being deinitialized
+        # this properly closes the session
+        self.session.close()
 
     def _url(self, path): #pylint: disable=no-self-use
         """base api url"""
