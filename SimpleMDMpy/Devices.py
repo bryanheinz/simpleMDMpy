@@ -12,19 +12,31 @@ class Devices(SimpleMDMpy.SimpleMDM.Connection):
         self.url = self._url("/devices")
 
     def get_device(self, device_id="all", search=None, include_awaiting_enrollment=False):
-        """Returns a device specified by id. If no ID or search is
-        specified all devices will be returned"""
+        """
+        Returns a device specified by id. If no ID or search is specified all
+        devices will be returned.
+        
+        Args:
+            device_id (str, optional):  Returns a dictionary of the specified
+                device id. By default, it returns a list of all devices. If a
+                device_id and search is specified, then search will be ignored.
+            search (str, optional): Returns a list of devices that match the
+                search criteria. Defaults to None. Ignored if device_id is set.
+            include_awaiting_enrollment (bool, optional): Returns a list of all
+                devices including devices in the "awaiting_enrollment" state.
+        
+        Returns:
+            dict: A single dictionary object with device information.
+            array: An array of dictionary objects with device information.
+        """
         url = self.url
-        data = {}
-        if search:
-            data['search'] = search
-        if include_awaiting_enrollment:
-            data['include_awaiting_enrollment'] = True
-        elif device_id != 'all':
+        params = {'include_awaiting_enrollment': include_awaiting_enrollment}
+        # if a device ID is specified, then ignore any searches
+        if device_id != 'all':
             url = url + "/" + str(device_id)
-        if include_awaiting_enrollment:
-            data.update({'include_awaiting_enrollment': include_awaiting_enrollment})
-        return self._get_data(url, data)
+        elif search:
+            params['search'] = search
+        return self._get_data(url, params)
 
     def create_device(self, name, group_id):
         """Creates a new device object in SimpleMDM. The response
