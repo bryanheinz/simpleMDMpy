@@ -70,7 +70,10 @@ class Scripts(Connection):
             }
         if not params and not files:
             raise ApiError(f"Missing updated variables.")
-        return self._patch_data(url, params, files)
+        resp = self._patch_data(url, params, files)
+        if not 200 <= resp.status_code <= 207:
+            raise ApiError(f"Script update failed with status code {resp.status_code}: {resp.content}")
+        return resp.json()['data']
 
     def delete_script(self, script_id):
         """You can use this method to delete a script from your account. Any
