@@ -14,6 +14,11 @@ Your SimpleMDM API key will need to be set as an environmental variable `api_key
 
 Help available via `help(SimpleMDMpy)`
 
+## Sample Projects
+
+* [Making SimpleMDM Complicated](https://github.com/lucasjhall/CONF-2021_MDO_YVR-Making_SimpleMDM_Complicated)
+* [SimpleCLI](https://github.com/MagerValp/SimpleCLI)
+
 ## Available Modules
 
 ### Account
