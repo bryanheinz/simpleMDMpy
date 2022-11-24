@@ -16,3 +16,5 @@ from SimpleMDMpy.Logs import Logs
 from SimpleMDMpy.LostMode import LostMode
 from SimpleMDMpy.ManagedAppConfigs import ManagedAppConfigs
 from SimpleMDMpy.PushCertificate import PushCertificate
+from SimpleMDMpy.ScriptJobs import ScriptJobs
+from SimpleMDMpy.Scripts import Scripts
