@@ -21,6 +21,7 @@
 - Fixes `_get_data` so that it properly preserves all input parameters ([#45](https://github.com/macadmins/simpleMDMpy/issues/45)) - TY [@bryanheinz](https://github.com/bryanheinz)
 - Adds help docs to Devices.get_device() - TY [@bryanheinz](https://github.com/bryanheinz)
 - Add Scripts and ScriptJobs - TY [@MagerValp](https://github.com/MagerValp)
+- Fix pagination - TY [@jcfrt](https://github.com/jcfrt)
 
 ### Issues
 
@@ -32,6 +33,7 @@
 - Closes issue #43
 - Closes issue #29
 - Closes issue #45
+- Closes issue #57
 
 ## [v3.0.6]
 
