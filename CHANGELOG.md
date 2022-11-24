@@ -20,6 +20,7 @@
 - Add retry on 5xx errors to GET requests to `_get_data` - TY [@MagerValp](https://github.com/MagerValp)
 - Fixes `_get_data` so that it properly preserves all input parameters ([#45](https://github.com/macadmins/simpleMDMpy/issues/45)) - TY [@bryanheinz](https://github.com/bryanheinz)
 - Adds help docs to Devices.get_device() - TY [@bryanheinz](https://github.com/bryanheinz)
+- Add Scripts and ScriptJobs - TY [@MagerValp](https://github.com/MagerValp)
 
 ### Issues
 
