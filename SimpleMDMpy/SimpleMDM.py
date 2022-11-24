@@ -51,7 +51,7 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
     def _is_devices_req(self, url):
         return url.startswith(self._url("/devices"))
 
-    def _get_data(self, url, params={}):
+    def _get_data(self, url, params=None):
         """GET call to SimpleMDM API"""
         has_more = True
         list_data = []
@@ -59,9 +59,11 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
         # the parameters aren't included with the input params. This is needed
         # so that certain other functions, like Logs.get_logs(), can send custom
         # starting_after and limit parameters.
-        req_params = {}
-        req_params['limit'] = params.get('limit', 100)
-        req_params['starting_after'] = params.get('starting_after', 0)
+        if params is None:
+            req_params = {}
+        else:
+            req_params = params.copy()
+        req_params['limit'] = req_params.get('limit', 100)
         while has_more:
             # Calls to /devices should be rate limited
             if self._is_devices_req(url):
@@ -69,7 +71,7 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
                     time.sleep(time.time() - self.last_device_req_timestamp)
             self.last_device_req_timestamp = time.time()
             while True:
-                resp = self.session.get(url, params=params, auth=(self.api_key, ""), proxies=self.proxyDict)
+                resp = self.session.get(url, params=req_params, auth=(self.api_key, ""), proxies=self.proxyDict)
                 # A 429 means we've hit the rate limit, so back off and retry
                 if resp.status_code == 429:
                     time.sleep(1)
@@ -86,7 +88,7 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
             list_data.extend(data)
             has_more = resp_json.get('has_more', False)
             if has_more:
-                params["starting_after"] = data[-1].get('id')
+                req_params["starting_after"] = data[-1].get('id')
         return list_data
 
     def _get_xml(self, url, params=None):
