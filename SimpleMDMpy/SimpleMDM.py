@@ -67,9 +67,10 @@ class Connection(object): #pylint: disable=old-style-class,too-few-public-method
         while has_more:
             # Calls to /devices should be rate limited
             if self._is_devices_req(url):
-                if time.time() - self.last_device_req_timestamp < self.device_req_rate_limit:
-                    time.sleep(time.time() - self.last_device_req_timestamp)
-            self.last_device_req_timestamp = time.time()
+                seconds_since_last_device_req = time.monotonic() - self.last_device_req_timestamp
+                if seconds_since_last_device_req < self.device_req_rate_limit:
+                    time.sleep(self.device_req_rate_limit - seconds_since_last_device_req)
+            self.last_device_req_timestamp = time.monotonic()
             while True:
                 resp = self.session.get(url, params=req_params, auth=(self.api_key, ""), proxies=self.proxyDict)
                 # A 429 means we've hit the rate limit, so back off and retry
