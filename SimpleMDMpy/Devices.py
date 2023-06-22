@@ -103,6 +103,14 @@ class Devices(SimpleMDMpy.SimpleMDM.Connection):
         url = self.url + "/" + str(device_id) + "/lock"
         data = {'message': message, 'phone_number': phone_number, 'pin':pin}
         return self._post_data(url, data)
+    
+    def rotate_filevault_key(self, device_id):
+        """You can use this method to rotate the filevault recovery key for a
+        device. SimpleMDM must be aware of the current recovery key or this
+        command will fail.
+        """
+        url = f"{self.url}/{str(device_id)}/rotate_filevault_key"
+        return self._post_data(url, data={})
 
     def clear_passcode_device(self, device_id):
         """You can use this method to unlock and remove the passcode of a device."""
